@@ -1,0 +1,2 @@
+class UsuarioNaoEstaNoGrupoError(Exception):
+    pass

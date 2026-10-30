@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Logs
+logs/
+*.log
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Relatórios temporários
+reports/
+
+# Perfil Teams
+profile/
