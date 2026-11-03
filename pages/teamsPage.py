@@ -121,8 +121,10 @@ class TeamsPage(BasePage):
 
         # Produção
         self.page.keyboard.press("Enter")
+        self.page.keyboard.press("Enter")
         time.sleep(1)
         self.page.keyboard.press("Enter")
+        time.sleep(1)
  
     def escrever_mensagem(self, mensagem):
 

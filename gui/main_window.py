@@ -456,7 +456,7 @@ class MainWindow(QMainWindow):
             self.log_text
         )
         self.footer = QLabel(
-            "GIGI Cobrador v1.0.0 | Desenvolvido por G. Junior | © 2026"
+            "GIGI Cobrador v1.0.1 | Desenvolvido por G. Junior | © 2026"
         )
 
         self.footer.setAlignment(
