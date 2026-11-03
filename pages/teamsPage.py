@@ -117,10 +117,11 @@ class TeamsPage(BasePage):
             texto_depois
         )
 
-        self.page.wait_for_timeout(2000)
+        self.page.wait_for_timeout(3000)
 
         # Produção
         self.page.keyboard.press("Enter")
+        time.sleep(1)
         self.page.keyboard.press("Enter")
         time.sleep(1)
         self.page.keyboard.press("Enter")
