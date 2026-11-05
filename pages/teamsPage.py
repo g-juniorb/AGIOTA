@@ -80,6 +80,54 @@ class TeamsPage(BasePage):
             1000
         )
 
+    def inserir_link(
+        self,
+        url,
+        texto=None
+    ):
+
+        texto = texto or url
+
+        # Simula um paste com HTML para forçar a criação de um link real,
+        # já que o auto-link do Teams falha em URLs longas/codificadas.
+        self.page.evaluate(
+            """([html, texto]) => {
+                const dt = new DataTransfer();
+                dt.setData('text/html', html);
+                dt.setData('text/plain', texto);
+                const alvo = document.querySelector(
+                    "[contenteditable='true']"
+                );
+                alvo.dispatchEvent(new ClipboardEvent('paste', {
+                    clipboardData: dt,
+                    bubbles: true,
+                    cancelable: true
+                }));
+            }""",
+            [f'<a href="{url}">{texto}</a>', texto]
+        )
+
+        self.page.wait_for_timeout(500)
+
+    def _digitar_com_link(
+        self,
+        trecho,
+        link
+    ):
+
+        link = str(link) if link else None
+
+        if link and link in trecho:
+
+            antes, depois = trecho.split(link, 1)
+
+            self.page.keyboard.insert_text(antes)
+            self.inserir_link(link)
+            self.page.keyboard.insert_text(depois)
+
+        else:
+            self.page.keyboard.insert_text(trecho)
+
     def enviar_mensagem_com_mencao(
         self,
         cobranca
@@ -99,8 +147,9 @@ class TeamsPage(BasePage):
         )
 
         # Primeira parte
-        self.page.keyboard.insert_text(
-            texto_antes
+        self._digitar_com_link(
+            texto_antes,
+            cobranca.link_demandas
         )
 
         self.page.wait_for_timeout(1000)
@@ -113,10 +162,12 @@ class TeamsPage(BasePage):
         self.page.wait_for_timeout(1000)
 
         # Segunda parte
-        self.page.keyboard.insert_text(
-            texto_depois
+        self._digitar_com_link(
+            texto_depois,
+            cobranca.link_demandas
         )
 
+        self.page.keyboard.type(" ")
         self.page.wait_for_timeout(3000)
 
         # Produção
